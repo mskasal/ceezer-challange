@@ -1,32 +1,142 @@
 :root {
+  --clr-white: #fff;
+  --clr-black: #000;
+  --clr-gray: #999;
+
+  --ff-primary: system-ui;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-  }
-}
+/* https://piccalil.li/blog/a-modern-css-reset */
 
-* {
+/* Box sizing rules */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
-  padding: 0;
+}
+
+/* Remove default margin */
+* {
   margin: 0;
+  padding: 0;
+  font-family: inherit;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+  scroll-behavior: smooth;
 }
 
 html,
 body {
-  max-width: 100vw;
+  height: 100%;
 }
 
+/* Set core body defaults */
 body {
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+  color: var(--clr-black);
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture,
+svg {
+  max-width: 100%;
+  display: block;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
+
+/* end of css reset*/
+
+/* Utils */
+
+.text-primary {
+  color: var(--clr-black);
+}
+
+.bg-primary {
+  background-color: var(--clr-white);
+}
+
+/* end of Utils */
+
+body {
+  font-family: var(--ff-primary);
+  color: var(--clr-black);
+}
+
+.container {
+  --_max-width: var(--max-width, 1100px);
+  --_padding: var(--padding, 1rem);
+
+  padding: var(--_padding);
+  width: min(var(--_max-width), 100% - (var(--_padding) * 2));
+  margin-inline: auto;
+}
+
+/* global media queries */
+/* mobile */
+@media (width < 30em) {
+  :root {
+    --max-width: 100dvw;
+    --padding: 0.75rem;
+  }
+}
+
+/* tablet */
+@media (30em <=width <= 60em) {
+  :root {
+    --max-width: 80dvw;
+    --padding: 0.75rem;
+  }
+}
+
+/* desktop */
+@media (60em <= width <= 100em) {
+  :root {
+    --max-width: 1200px;
+  }
+}
+
+button {
+  background: none;
+  padding: 0.3rem 1rem;
+  cursor: pointer;
+  border: 1px solid var(--clr-gray);
+}
+
+button:hover {
+  opacity: 0.7;
+}
+

@@ -62,7 +62,7 @@ const data = [
   {
     "id": 5,
     "name": "EverGreen Carbon",
-    "country": "Egipt",
+    "country": "Egypt",
     "image":
       "https://ceezer-public-assets.s3.eu-central-1.amazonaws.com/project_type_sample_images/Renewable+energy/andreas-gucklhorn-Ilpf2eUPpUE-unsplash-min.jpg",
     "price_per_ton": 10.5,
