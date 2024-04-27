@@ -1,0 +1,45 @@
+.layout {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+.grid {
+  display: grid;
+  grid-auto-flow: dense;
+  gap: 1rem;
+}
+
+.project {
+  --_padding: 1rem;
+  grid-row: span 3;
+  display: grid;
+  grid-template-rows: subgrid;
+  gap: 1rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.project > :not(img) {
+  margin-inline: var(--_padding);
+}
+
+.project > :last-child:not(img) {
+  margin-block-end: var(--_padding);
+}
+
+.project > img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+}
+
+.project__action {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.project__price {
+  line-height: 1;
+}
