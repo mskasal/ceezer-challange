@@ -6,5 +6,13 @@ Run the development server:
 npm run dev
 ```
 
+Run the tests:
+
+```bash
+npm run test
+```
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 result.
+
+

@@ -31,17 +31,25 @@ const useCartStore = create<CartState & CartActions>()(persist((set) => ({
       amount,
     };
 
-    set((state) => ({
-      items: [...state.items, newCartItem],
-      cartPrice: state.cartPrice + totalPrice,
-    }));
+    set((state) => {
+      const existingItem = state.items.find((item) =>
+        item.project.id === project.id
+      );
+      if (existingItem) {
+        return state;
+      }
+      return {
+        items: [...state.items, newCartItem],
+        cartPrice: state.cartPrice + totalPrice,
+      };
+    });
   },
   removeItem(id: number) {
     set((state) => {
       const cartItem = state.items.find((item) => item.project.id === id);
 
       if (cartItem === undefined) {
-        console.error("Can't fint the item. Your logic is wrong");
+        console.log("Can't fint the item. Your logic is wrong");
         return state;
       }
 
@@ -58,7 +66,7 @@ const useCartStore = create<CartState & CartActions>()(persist((set) => ({
       );
 
       if (cartItem === undefined) {
-        console.error("Can't fint the item. Your logic is wrong");
+        console.log("Can't fint the item. Your logic is wrong");
         return state;
       }
       const totalPrice = amount * cartItem.project.price_per_ton;
@@ -74,7 +82,7 @@ const useCartStore = create<CartState & CartActions>()(persist((set) => ({
           ...state.items.filter((item) => item.project.id !== id),
           newCartItem,
         ],
-        cartPrice: state.cartPrice + totalPrice,
+        cartPrice: state.cartPrice + totalPrice - cartItem.totalPrice,
       };
     });
   },
