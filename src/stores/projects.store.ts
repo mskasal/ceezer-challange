@@ -20,7 +20,6 @@ type ProjectsState = {
 
 type ProjectsActions = {};
 
-// const useCartStore = create<CartState & CartActions>((set) => ({
 const useProjectsStore = create<ProjectsState & ProjectsActions>(() => ({
   items: [...projects],
 }));

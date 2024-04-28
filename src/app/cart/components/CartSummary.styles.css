@@ -1,0 +1,21 @@
+.cart-summary {
+  display: flex;
+  flex-direction: column;
+  padding-inline: var(--_padding);
+  gap: 1rem;
+  border: 1px solid var(--clr-gray);
+
+  ul {
+    li {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  .cart-checkout {
+    padding: var(--_padding);
+    button {
+      width: 100%;
+    }
+  }
+}
