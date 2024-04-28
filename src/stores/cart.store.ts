@@ -1,5 +1,6 @@
 import { create } from "zustand";
 
+import { persist } from "zustand/middleware";
 import { Project } from "./projects.store";
 
 export interface CartItem {
@@ -11,9 +12,6 @@ export interface CartItem {
 type CartState = {
   items: CartItem[];
   cartPrice: number;
-  vat: number;
-  vatPrice: number;
-  totalCartPrice: number;
 };
 
 type CartActions = {
@@ -22,31 +20,26 @@ type CartActions = {
   editItem: (id: number, amount: number) => void;
 };
 
-const useCartStore = create<CartState & CartActions>((set) => ({
+const useCartStore = create<CartState & CartActions>()(persist((set) => ({
   items: [],
   cartPrice: 0,
-  vat: 0.12,
-  vatPrice: 0,
-  totalCartPrice: 0,
   addItem(project: Project, amount: number) {
     const totalPrice = amount * project.price_per_ton;
-
     const newCartItem = {
       project,
       totalPrice,
       amount,
     };
+
     set((state) => ({
       items: [...state.items, newCartItem],
       cartPrice: state.cartPrice + totalPrice,
-      totalCartPrice: ((state.cartPrice + totalPrice) * state.vat) +
-        state.cartPrice,
-      vatPrice: (state.cartPrice + totalPrice) * state.vat,
     }));
   },
   removeItem(id: number) {
     set((state) => {
       const cartItem = state.items.find((item) => item.project.id === id);
+
       if (cartItem === undefined) {
         console.error("Can't fint the item. Your logic is wrong");
         return state;
@@ -55,9 +48,6 @@ const useCartStore = create<CartState & CartActions>((set) => ({
       return {
         items: [...state.items.filter((item) => item.project.id !== id)],
         cartPrice: state.cartPrice - cartItem.totalPrice,
-        totalCartPrice: ((state.cartPrice - cartItem.totalPrice) * state.vat) +
-          state.cartPrice,
-        vatPrice: (state.cartPrice - cartItem.totalPrice) * state.vat,
       };
     });
   },
@@ -66,6 +56,7 @@ const useCartStore = create<CartState & CartActions>((set) => ({
       const cartItem = state.items.find((item: CartItem) =>
         item.project.id === id
       );
+
       if (cartItem === undefined) {
         console.error("Can't fint the item. Your logic is wrong");
         return state;
@@ -79,14 +70,14 @@ const useCartStore = create<CartState & CartActions>((set) => ({
       };
 
       return {
-        items: [...state.items, newCartItem],
+        items: [
+          ...state.items.filter((item) => item.project.id !== id),
+          newCartItem,
+        ],
         cartPrice: state.cartPrice + totalPrice,
-        totalCartPrice: ((state.cartPrice + totalPrice) * state.vat) +
-          state.cartPrice,
-        vatPrice: (state.cartPrice + totalPrice) * state.vat,
       };
     });
   },
-}));
+}), { name: "cart-store", skipHydration: false }));
 
 export default useCartStore;

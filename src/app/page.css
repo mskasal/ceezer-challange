@@ -22,6 +22,11 @@
           align-items: center;
           text-decoration: none;
         }
+
+        small {
+          display: flex;
+          gap: 3px;
+        }
       }
     }
   }

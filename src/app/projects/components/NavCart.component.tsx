@@ -1,16 +1,20 @@
 "use client";
 
 import useCartStore from "@/stores/cart.store";
+import localeCurrency from "@/utils/localeCurrency";
 
 export default function NavCart() {
-  const { items, totalCartPrice } = useCartStore((state) => state);
+  const { items, cartPrice } = useCartStore((state) => state);
   return (
     <div className="nav-cart">
       <a href="/cart">
         <b>Cart total</b>
         <small>
-          <b>{totalCartPrice}</b>
-          {items.length} items
+          <b>{localeCurrency(cartPrice)}</b>
+          &#x2022;
+          <span>
+            {items.length} items
+          </span>
         </small>
       </a>
     </div>

@@ -1,19 +1,16 @@
 .cart-summary {
   display: flex;
   flex-direction: column;
-  padding-inline: var(--_padding);
-  gap: 1rem;
-  border: 1px solid var(--clr-gray);
+  gap: 1.5rem;
 
-  ul {
-    li {
-      display: flex;
-      justify-content: space-between;
-    }
+  .cart-s-wrapper {
+    border: 1px solid var(--clr-gray);
+    padding-inline: var(--_padding);
   }
 
   .cart-checkout {
     padding: var(--_padding);
+
     button {
       width: 100%;
     }

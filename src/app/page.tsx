@@ -23,9 +23,6 @@ export default function Home() {
           <p>Porjects description</p>
         </div>
         <div className="layout">
-          <div className="project-filter">
-            filter items
-          </div>
           <ProjectList />
         </div>
       </div>

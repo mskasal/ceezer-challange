@@ -1,5 +1,7 @@
 import { create } from "zustand";
-import projects from "../../data/projects.data.js";
+import { persist } from "zustand/middleware";
+
+import projects from "@data/projects.data.js";
 
 export interface Project {
   id: number;
@@ -10,6 +12,7 @@ export interface Project {
   offered_volume_in_tons: number;
   supplier_name: string;
   earliest_delivery: string;
+  distribution_weight: number;
   sdgs: number[];
   description: string;
 }
@@ -20,8 +23,10 @@ type ProjectsState = {
 
 type ProjectsActions = {};
 
-const useProjectsStore = create<ProjectsState & ProjectsActions>(() => ({
-  items: [...projects],
-}));
+const useProjectsStore = create<ProjectsState & ProjectsActions>()(
+  persist(() => ({
+    items: [...projects],
+  }), { name: "projects-store", skipHydration: false }),
+);
 
 export default useProjectsStore;
