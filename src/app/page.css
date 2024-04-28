@@ -5,6 +5,7 @@
     border-bottom: 1px solid lightgray;
     background: var(--clr-white);
     position: sticky;
+    z-index: 1;
     top: 0;
 
     .page__navigation {
