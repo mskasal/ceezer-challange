@@ -1,6 +1,10 @@
+"use client";
+import useCartStore from "@/stores/cart.store";
 import "./page.css";
 
 export default function Cart() {
+  const cart = useCartStore((state) => state);
+
   return (
     <div className="page">
       <div className="page__header">
@@ -20,36 +24,43 @@ export default function Cart() {
         </div>
         <div className="layout">
           <main className="cart">
-            <div className="cart-item">
-              <div className="cart-item__header">
-                <img src="" alt="" />
+            {cart.items.map((cartItem) => (
+              <div className="cart-item" key={`c-k-${cartItem.project.id}`}>
+                <div className="cart-item__header">
+                  <img
+                    src={cartItem.project.image}
+                    alt={cartItem.project.name}
+                  />
+                </div>
+                <div className="cart-item__details">
+                  <h3 className="cart-item__title">{cartItem.project.name}</h3>
+                  <ul className="cart-item__price" role="list">
+                    <li className="piece-price">
+                      {cartItem.project.price_per_ton}
+                    </li>
+                    <li className="weight">
+                      <img src="/weight.svg" alt="Weight (tons)" width="15" />
+                      <span>{cartItem.amount}</span>
+                      <input
+                        type="range"
+                        max="100"
+                        step="1"
+                        hidden
+                      />
+                    </li>
+                  </ul>
+                </div>
+                <div className="cart-item__actions">
+                  <button className="edit btn-icon">
+                    <img src="/edit.svg" alt="Edit cart" />
+                  </button>
+                  <button className="remove btn-icon">
+                    <img src="/bin.svg" alt="Remove item" />
+                  </button>
+                </div>
+                <div className="total-price">{cartItem.totalPrice}</div>
               </div>
-              <div className="cart-item__details">
-                <h3 className="cart-item__title">item name</h3>
-                <ul className="cart-item__price" role="list">
-                  <li className="piece-price">30</li>
-                  <li className="weight">
-                    <img src="/weight.svg" alt="Weight (tons)" width="15" />
-                    <span>300</span>
-                    <input
-                      type="range"
-                      max="100"
-                      step="1"
-                      hidden
-                    />
-                  </li>
-                </ul>
-              </div>
-              <div className="cart-item__actions">
-                <button className="edit btn-icon">
-                  <img src="/edit.svg" alt="Edit cart" />
-                </button>
-                <button className="remove btn-icon">
-                  <img src="/bin.svg" alt="Remove item" />
-                </button>
-              </div>
-              <div className="total-price">9000</div>
-            </div>
+            ))}
           </main>
           <aside>
             <div className="cart-summary">
@@ -60,16 +71,16 @@ export default function Cart() {
               <div className="cart-summary--price">
                 <ul className="calculation" role="list">
                   <li>
-                    <b>Project cost:</b>
-                    <span>9000</span>
+                    <b>Projects cost:</b>
+                    <span>{cart.cartPrice}</span>
                   </li>
                   <li>
-                    <b>VAT %12</b>
-                    <span>108</span>
+                    <b>VAT %{cart.vat * 100}</b>
+                    <span>{cart.vatPrice}</span>
                   </li>
                 </ul>
                 <div className="total">
-                  <h4>9108</h4>
+                  <h4>{cart.totalCartPrice}</h4>
                 </div>
               </div>
               <div className="cart-checkout">

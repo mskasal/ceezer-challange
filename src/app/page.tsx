@@ -1,10 +1,15 @@
-import projects from "../../data/projects.data";
-import SDGs from "../../sdgs.data";
+"use client";
+// import SDGs from "../../sdgs.data";
 import countries from "../../data/countries.data";
 import Image from "next/image";
 import "./page.css";
+import useProjectsStore from "@/stores/projects.store";
+import useCartStore from "@/stores/cart.store";
 
 export default function Home() {
+  const projects = useProjectsStore((state) => state.items);
+  const { addItem, items, totalCartPrice } = useCartStore((state) => state);
+
   return (
     <div className="page">
       <header className="page__header">
@@ -17,7 +22,10 @@ export default function Home() {
           <div className="cart">
             <a href="/cart">
               <b>Cart total</b>
-              <small>item count</small>
+              <small>
+                <b>{totalCartPrice}</b>
+                {items.length} items
+              </small>
             </a>
           </div>
         </nav>
@@ -34,7 +42,7 @@ export default function Home() {
           <main className="grid project-list">
             {projects.map((project) => {
               return (
-                <div className="project">
+                <div className="project" key={`p-k-${project.id.toString()}`}>
                   <img src={project.image} alt={project.name} />
                   <p className="project__description" hidden>
                     {project.description}
@@ -69,7 +77,12 @@ export default function Home() {
                       step="1"
                       hidden
                     />
-                    <button className="button project__action--cart">
+                    <button
+                      className="button project__action--cart"
+                      onClick={() => {
+                        addItem(project, 12);
+                      }}
+                    >
                       Buy
                     </button>
                   </div>
