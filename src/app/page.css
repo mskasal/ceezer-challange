@@ -12,6 +12,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      vertical-align: middle;
+      height: 70px;
 
       .cart {
         a {
@@ -22,14 +24,14 @@
         }
       }
     }
+  }
 
-    .page__body {
-      display: flex;
-      flex-direction: column;
-      gap: 3rem;
-      padding: var(--_padding);
-      overflow: auto;
-    }
+  .page__body {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    padding: var(--_padding);
+    overflow: auto;
   }
 }
 

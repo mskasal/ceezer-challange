@@ -13,9 +13,11 @@ export default function Cart() {
         </nav>
       </div>
 
-      <div className="page-body container">
-        <h1>Cart</h1>
-        <p>Cart description</p>
+      <div className="page__body container">
+        <div className="page__body--header">
+          <h1>Cart</h1>
+          <p>Cart description</p>
+        </div>
         <div className="layout">
           <main className="cart">
             <div className="cart-item">
@@ -27,6 +29,7 @@ export default function Cart() {
                 <ul className="cart-item__price" role="list">
                   <li className="piece-price">30</li>
                   <li className="weight">
+                    <img src="/weight.svg" alt="Weight (tons)" width="15" />
                     <span>300</span>
                     <input
                       type="range"
@@ -38,11 +41,11 @@ export default function Cart() {
                 </ul>
               </div>
               <div className="cart-item__actions">
-                <button className="edit">
-                  <img src="" alt="" />
+                <button className="edit btn-icon">
+                  <img src="/edit.svg" alt="Edit cart" />
                 </button>
-                <button className="remove">
-                  <img src="" alt="" />
+                <button className="remove btn-icon">
+                  <img src="/bin.svg" alt="Remove item" />
                 </button>
               </div>
               <div className="total-price">9000</div>
@@ -68,6 +71,9 @@ export default function Cart() {
                 <div className="total">
                   <h4>9108</h4>
                 </div>
+              </div>
+              <div className="cart-checkout">
+                <button>Checkout</button>
               </div>
             </div>
           </aside>
