@@ -32,3 +32,10 @@
   grid-template-rows: 1fr;
 }
 
+@media (width <= 55em) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+

@@ -10,7 +10,7 @@ export default function ProjectList() {
 
   return (
     <main className="grid project-list">
-      {projects.map((project) => <ProjectItem project={project} />)}
+      {projects.map((project) => <ProjectItem project={project} key={`p-k-${project.id}`} />)}
     </main>
   );
 }

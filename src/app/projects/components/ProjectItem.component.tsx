@@ -25,7 +25,7 @@ export default function ProjectItem({ project }: ProjectItemProps) {
   };
 
   return (
-    <div className="project" key={`p-k-${project.id}`}>
+    <div className="project">
       <img src={project.image} alt={project.name} />
       <p className="project__description" hidden>
         {project.description}

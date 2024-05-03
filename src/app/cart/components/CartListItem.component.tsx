@@ -24,7 +24,7 @@ export default function CartListItem({ item }: CartListItemPorps) {
   };
 
   return (
-    <div className="cart-item" key={`c-k-${item.project.id}`}>
+    <div className="cart-item">
       <div className="cart-item__header">
         <img
           src={item.project.image}
