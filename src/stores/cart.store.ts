@@ -40,7 +40,7 @@ const useCartStore = create<CartState & CartActions>()(persist((set) => ({
       }
       return {
         items: [...state.items, newCartItem],
-        cartPrice: state.cartPrice + totalPrice,
+        cartPrice: Math.abs(state.cartPrice + totalPrice),
       };
     });
   },
@@ -55,7 +55,7 @@ const useCartStore = create<CartState & CartActions>()(persist((set) => ({
 
       return {
         items: [...state.items.filter((item) => item.project.id !== id)],
-        cartPrice: state.cartPrice - cartItem.totalPrice,
+        cartPrice: Math.abs(state.cartPrice - cartItem.totalPrice),
       };
     });
   },
@@ -82,7 +82,7 @@ const useCartStore = create<CartState & CartActions>()(persist((set) => ({
           ...state.items.filter((item) => item.project.id !== id),
           newCartItem,
         ],
-        cartPrice: state.cartPrice + totalPrice - cartItem.totalPrice,
+        cartPrice: Math.abs(state.cartPrice + totalPrice - cartItem.totalPrice),
       };
     });
   },

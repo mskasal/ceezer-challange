@@ -15,7 +15,7 @@ export default function Cart() {
 
   return (
     <main className="cart">
-      {items.map((cartItem: CartItem) => <CartListItem item={cartItem} />)}
+      {items.map((cartItem: CartItem) => <CartListItem key={`c-i-${cartItem.project.id}`} item={cartItem} />)}
     </main>
   );
 }
