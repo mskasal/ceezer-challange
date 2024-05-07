@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from "react";
 
-import useCartStore, { CartItem } from "@/stores/cart.store";
+import { CartItem } from "@/stores/cart.store";
+import { useCartStore } from "@/providers/cart-store.provider";
 import localeCurrency from "@/utils/localeCurrency";
 
 type CartListItemPorps = {
