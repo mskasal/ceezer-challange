@@ -1,7 +1,6 @@
 "use client";
 
-import useCartStore from "@/stores/cart.store";
-
+import { useCartStore } from "@/providers/cart-store.provider";
 import localeCurrency from "@/utils/localeCurrency";
 
 import "./CartSummary.styles.css";

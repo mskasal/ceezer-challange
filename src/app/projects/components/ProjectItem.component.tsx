@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from "react";
 
-import useCartStore from "@/stores/cart.store";
+import { useCartStore } from "@/providers/cart-store.provider";
 import { Project } from "@/stores/projects.store";
 
 import localeCurrency from "@/utils/localeCurrency";

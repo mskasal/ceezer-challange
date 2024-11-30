@@ -1,6 +1,5 @@
 import { create } from "zustand";
 
-import { persist } from "zustand/middleware";
 import { Project } from "./projects.store";
 
 export interface CartItem {
@@ -20,72 +19,81 @@ type CartActions = {
   editItem: (id: number, amount: number) => void;
 };
 
-const useCartStore = create<CartState & CartActions>()(persist((set) => ({
-  items: [],
-  cartPrice: 0,
-  addItem(project: Project, amount: number) {
-    const totalPrice = amount * project.price_per_ton;
-    const newCartItem = {
-      project,
-      totalPrice,
-      amount,
-    };
+export type CartStore = CartState & CartActions;
 
-    set((state) => {
-      const existingItem = state.items.find((item) =>
-        item.project.id === project.id
-      );
-      if (existingItem) {
-        return state;
-      }
-      return {
-        items: [...state.items, newCartItem],
-        cartPrice: Math.abs(state.cartPrice + totalPrice),
-      };
-    });
-  },
-  removeItem(id: number) {
-    set((state) => {
-      const cartItem = state.items.find((item) => item.project.id === id);
+export const initCartStore = (): CartState => {
+  return {
+    items: [],
+    cartPrice: 0,
+  };
+};
 
-      if (cartItem === undefined) {
-        console.log("Can't fint the item. Your logic is wrong");
-        return state;
-      }
-
-      return {
-        items: [...state.items.filter((item) => item.project.id !== id)],
-        cartPrice: Math.abs(state.cartPrice - cartItem.totalPrice),
-      };
-    });
-  },
-  editItem(id: number, amount: number) {
-    set((state) => {
-      const cartItem = state.items.find((item: CartItem) =>
-        item.project.id === id
-      );
-
-      if (cartItem === undefined) {
-        console.log("Can't fint the item. Your logic is wrong");
-        return state;
-      }
-      const totalPrice = amount * cartItem.project.price_per_ton;
-
+export const createCartStore = (initialState: CartState) =>
+  create<CartStore>()((set) => ({
+    ...initialState,
+    addItem(project: Project, amount: number) {
+      const totalPrice = amount * project.price_per_ton;
       const newCartItem = {
-        ...cartItem,
-        amount,
+        project,
         totalPrice,
+        amount,
       };
 
-      return {
-        items: [
-          ...state.items.filter((item) => item.project.id !== id),
-          newCartItem,
-        ],
-        cartPrice: Math.abs(state.cartPrice + totalPrice - cartItem.totalPrice),
-      };
-    });
-  },
-}), { name: "cart-store", skipHydration: false }));
+      set((state) => {
+        const existingItem = state.items.find((item) =>
+          item.project.id === project.id
+        );
+        if (existingItem) {
+          return state;
+        }
+        return {
+          items: [...state.items, newCartItem],
+          cartPrice: Math.abs(state.cartPrice + totalPrice),
+        };
+      });
+    },
+    removeItem(id: number) {
+      set((state) => {
+        const cartItem = state.items.find((item) => item.project.id === id);
 
-export default useCartStore;
+        if (cartItem === undefined) {
+          console.log("Can't fint the item. Your logic is wrong");
+          return state;
+        }
+
+        return {
+          items: [...state.items.filter((item) => item.project.id !== id)],
+          cartPrice: Math.abs(state.cartPrice - cartItem.totalPrice),
+        };
+      });
+    },
+    editItem(id: number, amount: number) {
+      set((state) => {
+        const cartItem = state.items.find((item: CartItem) =>
+          item.project.id === id
+        );
+
+        if (cartItem === undefined) {
+          console.log("Can't fint the item. Your logic is wrong");
+          return state;
+        }
+        const totalPrice = amount * cartItem.project.price_per_ton;
+
+        const newCartItem = {
+          ...cartItem,
+          amount,
+          totalPrice,
+        };
+
+        return {
+          items: [
+            ...state.items.filter((item) => item.project.id !== id),
+            newCartItem,
+          ],
+          cartPrice: Math.abs(
+            state.cartPrice + totalPrice - cartItem.totalPrice,
+          ),
+        };
+      });
+    },
+  }));

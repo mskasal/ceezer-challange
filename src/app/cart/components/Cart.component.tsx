@@ -1,6 +1,7 @@
 "use client";
 
-import useCartStore, { CartItem } from "@/stores/cart.store";
+import { CartItem } from "@/stores/cart.store";
+import { useCartStore } from "@/providers/cart-store.provider";
 
 import CartListItem from "./CartListItem.component";
 
@@ -15,7 +16,9 @@ export default function Cart() {
 
   return (
     <main className="cart">
-      {items.map((cartItem: CartItem) => <CartListItem key={`c-i-${cartItem.project.id}`} item={cartItem} />)}
+      {items.map((cartItem: CartItem) => (
+        <CartListItem key={`c-i-${cartItem.project.id}`} item={cartItem} />
+      ))}
     </main>
   );
 }
